@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Web Proxy</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f4f6fb;
+      color: #202124;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    }
+    label, input, button {
+      display: block;
+      width: 100%;
+    }
+    input {
+      padding: 12px 14px;
+      font-size: 1rem;
+      margin-top: 8px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+    }
+    button {
+      margin-top: 12px;
+      padding: 12px 16px;
+      background: #3751ff;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover {
+      background: #2c44d3;
+    }
+    iframe,
+    .notice {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    iframe {
+      min-height: 600px;
+    }
+    .notice {
+      padding: 18px;
+      background: #eef2ff;
+      color: #1e3a8a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Simple Web Proxy</h1>
+    <p>Enter a full URL and click <strong>Proxy</strong>. The remote page is loaded through this backend proxy.</p>
+
+    <label for="urlInput">URL to proxy</label>
+    <input id="urlInput" type="url" placeholder="https://example.com" />
+    <button id="proxyButton">Proxy</button>
+
+    <div class="notice">
+      <strong>Note:</strong> This proxy forwards content through the Node.js backend. If the site uses strict security headers, some resources may still be blocked.
+    </div>
+
+    <iframe id="proxyFrame" title="Proxy output"></iframe>
+  </div>
+
+  <script>
+    const input = document.getElementById('urlInput');
+    const button = document.getElementById('proxyButton');
+    const frame = document.getElementById('proxyFrame');
+
+    button.addEventListener('click', () => {
+      const url = input.value.trim();
+      if (!url) return alert('Please enter a URL.');
+      try {
+        new URL(url);
+      } catch (err) {
+        return alert('Enter a valid URL, including https:// or http://');
+      }
+
+      frame.src = `/proxy?url=${encodeURIComponent(url)}`;
+    });
+
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        button.click();
+      }
+    });
+  </script>
+</body>
+</html>

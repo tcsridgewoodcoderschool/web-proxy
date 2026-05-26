@@ -1,0 +1,15 @@
+{
+  "name": "simple-web-proxy",
+  "version": "1.0.0",
+  "description": "A simple HTML frontend with a JavaScript proxy backend.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.18.4"
+  }
+}
